@@ -61,7 +61,7 @@ At each time-step, agents move to a neighbouring patches (eight-cell neighbbourh
 
 2. movement can be at random, or agents can preferentially move to a neighbouring cell with the type they are most knowledgeable about    
 
-Eache time-step after an agent has reached an age of ten, there is a 10% chance of mortality.  On an agent's death, their offspring inherit some fraction of their knowledge (based on a uniform distribution, U[`parent-transfer`, 1) and all other attributes other than their patch visit memory. There is a chance (`defect-unit`) that the offspring will become a member of another unit, which represents an external transfer of knowledge to the unit [ref!]. 
+Each time-step after an agent has reached an age of ten, there is a 10% chance of mortality.  On an agent's death, their offspring inherit some fraction of their knowledge (based on a uniform distribution, U[`parent-transfer`, 1) and all other attributes other than their patch visit memory. There is a chance (`defect-unit`) that the offspring will become a member of another unit, which represents an external transfer of knowledge to the unit [ref!]. 
 
 #### Sensitivity Analysis
 
@@ -118,7 +118,7 @@ Total loss of 1000 (20%) over 100, 250, 500, 1000 ticks
 
 **Analysis**
 
-We analysed the data visually and did not use frequentist statistics (following White et al. [-@whiteEcologistsShouldNot2014]. We used R version X for the analyses with packages XYZ.
+We analysed the data visually and did not use frequentist statistics, following White et al. [-@whiteEcologistsShouldNot2014]. We used R version X for the analyses with packages XYZ.
 
 ### 
 
