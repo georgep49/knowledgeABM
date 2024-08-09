@@ -11,27 +11,25 @@ header-includes:
  \floatplacement{figure}{H}
 bibliography: bcHysteresis.bib
 csl: global-ecology-and-biogeography.csl
-
 ---
 
 ### Introduction
 
-Social-ecological memory (SEM) is a fundamental component of a social-ecological system's resilience to change [@folkeSynthesisBuildingResilience2002].  It is dynamic, and continually reshaped in positive and negative ways, both internally (e.g. as social norms within a group change) and externally (e.g., as knowledge from beyond a group is transferred into it).  Knowledge-belief-practice complexes underpin SEM.  These represent the long-term set of behaviours developed by humans based on repeated interactions with their environments [ref!]. A repeated outcome of colonialism has been the erosion of knowledge-beiief-practice (KBP) complexes, whether deliberate or otherwise. For example, many indigenous people have been deprived access to traditional resources by legislative means (a direct loss) and through dwindling populations of some species (an indirect loss); of course, these interact as the perceived conservation threat leads to regulatory mechanisms aimed at 'protecting' a species [@hartelTraditionalEcologicalKnowledge2023].  There is growing interest in understanding the conditions under which KBP are maintained, the trajectory of their loss, and how they might be reinstated if eroded or lost.
-
+Social-ecological memory (SEM) is a fundamental component of a social-ecological system's resilience to change [@folkeSynthesisBuildingResilience2002].  It is dynamic, and continually reshaped in positive and negative ways, both internally (e.g. as social norms within a group change) and externally (e.g., as knowledge from beyond a group is transferred into it).  Knowledge-belief-practice complexes underpin SEM.  These represent the long-term set of behaviours developed by humans based on repeated interactions with their environments [ref!]. A repeated outcome of colonialism has been the erosion of knowledge-belief-practice (KBP) complexes, whether deliberate or otherwise. For example, many indigenous people have been deprived access to traditional resources by legislative means (a direct loss) and through dwindling populations of some species (an indirect loss); of course, these interact as the perceived conservation threat leads to regulatory mechanisms aimed at 'protecting' a species [@hartelTraditionalEcologicalKnowledge2023].  There is growing interest in understanding the conditions under which KBP are maintained, the trajectory of their loss, and how they might be reinstated if eroded or lost.
 
 Regime shift dynamics in social-ecological systems have been the focus of recent attention [@farahbakhshModellingCoupledHuman2022], with concepts such as tipping points and hysteresis applied to social systems.  For example, Bausch et al. [-@bauchEarlyWarningSignals2016] show how human behaviour in a coupled human-environment system can drive regime shifts in forest cover; likewise, Mathais et al. [-@mathiasExploringNonlinearTransition2020] explore how social and ecological regime shifts can influence each other.  The focus of this research is often on how changes in human behaviour or activity trigger ecological change and the feedbacks between them.  Nevertheless, regime shifts could involve rapid change in knowledge-belief-practices as well as the biophysical environment.  Lyver et al. [@lyverBioculturalHysteresisInhibits2019] describe a conceptual model of how social-ecological systems can suffer 'biocultural hysteresis'. In their model, following the erosion of a KBP complex,  positive feedbacks act to maintain a new state potentially even after the mechanisms underpinning the loss are removed. In such settings, the restoration of the biological resource may be insufficient to restore the knowledge associated with it.  As Lyver et al. [@lyverBioculturalHysteresisInhibits2019] and Hartel [@rhartelTraditionalEcologicalKnowledge2023] emphasise, hysteresis implies that the loss of KBP persists even if access to the resource is reinstated (the state of the system is a function of its history, not just contemporary social-ecological conditions).  In a similar way, Hartel et al. [@hartelTraditionalEcologicalKnowledge2023, p. 213] argue that "TEK stays alive and useable in the long term only through reinforcing certain types of feedbacks, values, and beliefs". Following Fischer [@fischerLeveragePointsPerspective2019] and Abson et al. [@absonLeveragePointsSustainability2017], they envisage social-ecological systems as comprising different levels from shallow to deep (Figure X). Drawing on this framework, Hartel et al. [@hartelTraditionalEcologicalKnowledge2023] identify conditions where KBP might be irreversibly changed: (i) system levels are misaligned (e.g., local practices [parameters and feedbacks] do not align with economic hopes [intent]), (ii) external pressures impose disconnection, (iii) corruption, and (iv) demographic shifts (e.g. immigration into a local community) result in a dilution of the KBP.  
 
-In parallel to this social-ecological approach, quantitative sociologists have explored the conditions under which opinions and culture form and persist, and how these dynamics are influenced by social learning [@castellanoStatisticalPhysicsSocial2009].  For example, agent-based models have been used to explore how different opinions and beliefs might spread through social networks and subsequently persist.  This body of research demonstrates that different types of social interaction and learning will determine how information flows through social systems [-@flacheModelsSocialInfluence2017] and this influences human-environment feedbacks [@farahbakhshModellingCoupledHuman2022].  Proximity in various forms is an important control on knowledge sharing. Boschma  [@-boschmaProximityInnovationCritical2005] recognises five types of proximity -- geographic, social, cognitive, institutional, and organisational -- that relate to how the distance between those sharing knowledge influences this process.  For example, when individuals exchange knowledge the similarity of their shared experience and expertise  may influence learning -- if it is too disparate (low cognitive proximity), learning may be impeded.  Crucially, ref! argues that the effectiveness of knowledge exchange is not likely to be a monotonic response to distance -- for example, if knowledge exchange only occurs very locally (high geographic distance) or within very similar social groups (high social proximity) then lock-in effects may inhibit learning or innovation. There are clear links between these perspectives about proximity and exchange, and the challenges of the dynamic retention of TEK described above.  The mechanisms that underpin the erosion of a KBP complex act in multiple ways to change the proximity between individuals and each other and individuals and the environment.  
-
-
+In parallel, quantitative sociologists have explored the conditions under which opinions and culture form and persist, and how these dynamics are influenced by social learning [@castellanoStatisticalPhysicsSocial2009].  For example, agent-based models have been used to explore how different opinions and beliefs might spread through social networks and subsequently persist.  This body of research demonstrates that different types of social interaction and learning will determine how information flows through social systems [-@flacheModelsSocialInfluence2017] and this influences human-environment feedbacks [@farahbakhshModellingCoupledHuman2022].  Proximity in various forms is an important control on knowledge sharing. Boschma  [@-boschmaProximityInnovationCritical2005] recognises five types of proximity -- geographic, social, cognitive, institutional, and organisational -- that relate to how the distance between those sharing knowledge influences this process.  For example, when individuals exchange knowledge the similarity of their shared experience and expertise  may influence learning -- if it is too disparate (low cognitive proximity), learning may be impeded.  Crucially, Boschma  [@-boschmaProximityInnovationCritical2005] argues that the effectiveness of knowledge exchange is not likely to be a monotonic response to distance -- for example, if knowledge exchange only occurs very locally (high geographic distance) or within very similar social groups (high social proximity) then lock-in effects may inhibit learning or innovation. There are clear links between these perspectives about proximity and exchange, and the challenges of the dynamic retention of TEK described above.  The mechanisms that underpin the erosion of a KBP complex act in multiple ways to change the proximity between individuals and each other and individuals and the environment.  
 
 Here, we use an agent-based model (ABM; ref!) to explore the conditions under which biocultural hysteresis might arise.  In our model, agents interact with two types of resources and develop inter-generational understanding of their use through direct interaction and social learning; learning is affected by spatial cognitive, and social proximity. In particular we ask the following questions:
 
-1. Do different modes of social learning affect baseline levels of knowledge about the use of a resource?    
+1. How do social, geographic, and cognitive proximity affect levels of knowledge about the use of a resource in a stable environment?    
 
-2. Do different modes of learning provide resilience against erosion of knowledge following the permanent reduction or loss of access to a resource?
+2. How do different xxx of knowledge exchange affect levels of knowledge about the use of a resource in a stable environment?    
 
-3. Under what conditions do biocultural hysteresis affects emerge following the reduction or loss and then reinstatement of access to a resource?
+3. How do KBP respond to socio-ecological change (loss and reinstatement of access):
+  (a) Do different modes of learning provide resilience against erosion of knowledge following the permanent reduction or loss of access to a resource?
+  (b) Under what conditions do biocultural hysteresis affects emerge following the reduction or loss and then reinstatement of access to a resource?
 
 ## 
 
@@ -53,8 +51,7 @@ Agents belong to units (i.e., a social network), with the number of agents and u
 2. Spatial learning - if there are other agents within some radius `spatial-nhb`, then each agent will gain a fraction (`transfer-fraction`) of the difference between its knowledge and that of either: (i) a random, (ii) the most knowledgeable agent, or (iii) the median knowledge across all other agents on the patch for both resource types.     
 3. Social learning - each agent will gain a fraction (`transfer-fraction`) of the difference between it and that of either: (i) a random, (ii) the most knowledgeable agent, or (iii) the median knowledge across all agents in its social network (unit) for both resource types; this transfer occurs irrespective of location. This exchange represents internal knowledge transfer [ref!].  
 
-
-For the spatial and social learning a  threshold can be imposed such that agents cannot learn from other agents who have knowledge `cognitive-distance-threshold` more than their own.  This dynamic represents cognitive distance - that is the fact that once the knowledge base between two entities is sufficiently large learning can be impeded (.e.g, through an absence of shared language or perspective).
+For both spatial and social learning a threshold can be imposed such that agents cannot learn from other agents who have knowledge `cognitive-distance-threshold` more than their own.  This dynamic represents cognitive distance - that is the fact that once the knowledge base between two entities is sufficiently large learning can be impeded (.e.g, through an absence of shared language or perspective).
 
 The encounter procedure represents an individual learning via direct encounter with a resource, whereas the other two are forms of social learning.
 
@@ -66,10 +63,9 @@ At each time-step, agents move to a neighbouring patches (eight-cell neighbbourh
 
 Eache time-step after an agent has reached an age of ten, there is a 10% chance of mortality.  On an agent's death, their offspring inherit some fraction of their knowledge (based on a uniform distribution, U[`parent-transfer`, 1) and all other attributes other than their patch visit memory. There is a chance (`defect-unit`) that the offspring will become a member of another unit, which represents an external transfer of knowledge to the unit [ref!]. 
 
-
 #### Sensitivity Analysis
 
-We conducted a local sensitivity analysis by altering each of the parameters by +-20% and calculated the change in the man knowledge about resource a held in unit 1.  If a 20% change in the input resulted in a more than 20% change in the state variable we deemed this parameter as sensitive.  We calculated a sensitivity index following Hamby [-@hambyReviewTechniquesParameter1994]:
+We conducted a local sensitivity analysis by altering each of the parameters by \pm20% and calculated the change in the man knowledge about resource a held in unit 1.  If a 20% change in the input resulted in a more than 20% change in the state variable we deemed this parameter as sensitive.  We calculated a sensitivity index following Hamby [-@hambyReviewTechniquesParameter1994]:
 
 $$ \phi_i = \frac{\% \Delta Y}{\% \Delta X_{i+i}} $$        
 Eq. 1
@@ -80,10 +76,13 @@ Eq. 1
 
 1. Baseline conditions
 
-First, we explored the dynamics of the model under the different learning conditions and movement rules without any change in the availability of the resources over time.  Thus, we ran each combination of spatial learning, network learning, and random vs. preferential patch movement.  We ran 30 replicates for 30 generations with XXagents in XX social units for each of the eight learning/movement combinations [SM for SA on this?]. To evaluate the outcomes we measured the mean amount of knowledge for resource 'a' over generations and the risk of loss of knowledge (using a quasi-extinction threshold of five).
+First, we explored the dynamics of the model under the different learning conditions and movement rules without any change in the availability of the resources over time.  Thus, we ran each combination of spatial learning, network learning, and random vs. preferential patch movement.  We ran 30 replicates for 50 generations with 60 agents evenly distributed across three social units for each of the eight learning/movement combinations [SM for SA on this?]. To evaluate the outcomes we measured the mean amount of knowledge for resource 'a' over generations and the risk of loss of knowledge (using a quasi-extinction threshold of five).
 
-2. Effects of transfer-fraction etc.
-3. 
+2. Effects of different proximities
+
+
+3. Effects of different transfer types
+
 
 **Amount of loss scenarios**
 
@@ -91,7 +90,7 @@ We explored the implications of the loss of access/availability of one of the re
 
 **Rate of loss scenarios**
 
-Same total amount lost butover different periods.
+Same total amount lost but over different periods.
 
 Total loss of 1000 (20%) over 100, 250, 500, 1000 ticks
 
@@ -119,7 +118,7 @@ Total loss of 1000 (20%) over 100, 250, 500, 1000 ticks
 
 **Analysis**
 
-We analysed the data visually and did not use frequentist statstics (following White et al. (2014, ref!). We used R version X for the analyses with packages XYZ.
+We analysed the data visually and did not use frequentist statistics (following White et al. [-@whiteEcologistsShouldNot2014]. We used R version X for the analyses with packages XYZ.
 
 ### 
 
