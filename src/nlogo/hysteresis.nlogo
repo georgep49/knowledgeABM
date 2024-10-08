@@ -1612,7 +1612,7 @@ NetLogo 6.4.0
       <value value="1600"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="n-agents">
-      <value value="60"/>
+      <value value="120"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="end-loss">
       <value value="350"/>
@@ -1649,7 +1649,7 @@ NetLogo 6.4.0
       <value value="0.5"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="csv-file-name">
-      <value value="&quot;../output/data/defect/hysteresis_defect&quot;"/>
+      <value value="&quot;../../ms/data/sa-defect/sa_defect&quot;"/>
     </enumeratedValueSet>
   </experiment>
   <experiment name="calibrate" repetitions="10" sequentialRunOrder="false" runMetricsEveryStep="false">
@@ -1791,7 +1791,7 @@ NetLogo 6.4.0
       <value value="&quot;../output/data/one_run/hysteresis_one&quot;"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="baseline-agents-units" repetitions="30" sequentialRunOrder="false" runMetricsEveryStep="false">
+  <experiment name="baseline-agents-units" repetitions="10" sequentialRunOrder="false" runMetricsEveryStep="false">
     <setup>setup</setup>
     <go>step</go>
     <postRun>write-csv</postRun>
@@ -1801,6 +1801,8 @@ NetLogo 6.4.0
       <value value="2"/>
       <value value="3"/>
       <value value="4"/>
+      <value value="5"/>
+      <value value="6"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="rate-return">
       <value value="0"/>
@@ -1818,7 +1820,7 @@ NetLogo 6.4.0
       <value value="&quot;max&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="max-generations">
-      <value value="55"/>
+      <value value="40"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="end-return">
       <value value="1600"/>
@@ -1827,6 +1829,7 @@ NetLogo 6.4.0
       <value value="60"/>
       <value value="120"/>
       <value value="180"/>
+      <value value="240"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="end-loss">
       <value value="350"/>
@@ -1864,8 +1867,11 @@ NetLogo 6.4.0
     <enumeratedValueSet variable="n-p-a">
       <value value="0.5"/>
     </enumeratedValueSet>
+    <enumeratedValueSet variable="cognitive-proximity?">
+      <value value="false"/>
+    </enumeratedValueSet>
     <enumeratedValueSet variable="csv-file-name">
-      <value value="&quot;../output/data/baseline/hysteresis_baseline&quot;"/>
+      <value value="&quot;../../ms/data/baseline-nunits/baseline_nunits&quot;"/>
     </enumeratedValueSet>
   </experiment>
   <experiment name="null-one" repetitions="1" sequentialRunOrder="false" runMetricsEveryStep="false">
@@ -2180,7 +2186,7 @@ NetLogo 6.4.0
       </enumeratedValueSet>
     </subExperiment>
   </experiment>
-  <experiment name="spatial-nhb-size" repetitions="30" sequentialRunOrder="false" runMetricsEveryStep="false">
+  <experiment name="spatial-nhb-size" repetitions="20" sequentialRunOrder="false" runMetricsEveryStep="false">
     <setup>setup</setup>
     <go>step</go>
     <postRun>write-csv</postRun>
@@ -2210,7 +2216,87 @@ NetLogo 6.4.0
       <value value="1600"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="n-agents">
-      <value value="60"/>
+      <value value="120"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="end-loss">
+      <value value="350"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="parent-transfer">
+      <value value="0.85"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="transfer-fraction">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="start-loss">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="memory-length">
+      <value value="5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="spatial-nhb">
+      <value value="1"/>
+      <value value="1.5"/>
+      <value value="2"/>
+      <value value="2.85"/>
+      <value value="3"/>
+      <value value="4.25"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="spatial-learn?">
+      <value value="true"/>
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="knowledge-loss?">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="social-learn?">
+      <value value="false"/>
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="know-move?">
+      <value value="false"/>
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="defect-unit">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="n-p-a">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="csv-file-name">
+      <value value="&quot;../../ms/data/sa-spatial-nhb/spatial_nhb_&quot;"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="baseline-control" repetitions="30" sequentialRunOrder="false" runMetricsEveryStep="false">
+    <setup>setup</setup>
+    <go>step</go>
+    <postRun>write-csv</postRun>
+    <exitCondition>not any? turtles with [generation &lt; max-generations]</exitCondition>
+    <enumeratedValueSet variable="n-units">
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="rate-return">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="rate-loss">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="k-erosion">
+      <value value="0.015"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="start-return">
+      <value value="600"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="transfer-function">
+      <value value="&quot;max&quot;"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="max-generations">
+      <value value="50"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="end-return">
+      <value value="1600"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="n-agents">
+      <value value="120"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="end-loss">
       <value value="350"/>
@@ -2228,6 +2314,7 @@ NetLogo 6.4.0
       <value value="5"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="spatial-learn?">
+      <value value="false"/>
       <value value="true"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="knowledge-loss?">
@@ -2241,12 +2328,20 @@ NetLogo 6.4.0
       <value value="false"/>
       <value value="true"/>
     </enumeratedValueSet>
-    <steppedValueSet variable="defect-unit" first="0.5" step="0.5" last="3"/>
+    <enumeratedValueSet variable="defect-unit">
+      <value value="0"/>
+    </enumeratedValueSet>
     <enumeratedValueSet variable="n-p-a">
       <value value="0.5"/>
     </enumeratedValueSet>
+    <enumeratedValueSet variable="cognitive-proximity?">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="spatial-nhb">
+      <value value="1.5"/>
+    </enumeratedValueSet>
     <enumeratedValueSet variable="csv-file-name">
-      <value value="&quot;../output/data/defect/hysteresis_defect&quot;"/>
+      <value value="&quot;../../ms/data/baseline-control/baseline_control&quot;"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>

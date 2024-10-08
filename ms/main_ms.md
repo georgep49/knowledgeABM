@@ -28,8 +28,8 @@ Here, we use an agent-based model (ABM; ref!) to explore the conditions under wh
 2. How do different modes of knowledge exchange affect levels of knowledge about the use of a resource in a stable environment?    
 
 3. How do KBP respond to socio-ecological change (loss and reinstatement of access):
-  (a) Do different modes of learning provide resilience against erosion of knowledge following the permanent reduction or loss of access to a resource?
-  (b) Under what conditions do biocultural hysteresis affects emerge following the reduction or loss and then reinstatement of access to a resource?
+   (a) Do different modes of learning provide resilience against erosion of knowledge following the permanent reduction or loss of access to a resource?
+   (b) Under what conditions do biocultural hysteresis affects emerge following the reduction or loss and then reinstatement of access to a resource?
 
 ## 
 
@@ -55,7 +55,8 @@ For both spatial and social learning a threshold can be imposed such that agents
 
 The encounter procedure represents an individual learning via direct encounter with a resource, whereas the other two are forms of social learning.
 
-At each time-step, agents move to a neighbouring patches (eight-cell neighbbourhood), under the following constraints:
+At each time-step, agents move to a neighbouring patches, under the following constraints:
+
 1. agents can not move to a patch that is in their memory (the most recently visited memory-length` patches)    
 2. movement can be at random, or agents can preferentially move to a neighbouring cell with the type they are most knowledgeable about    
 
@@ -63,28 +64,31 @@ Each time-step after an agent has reached an age of ten, there is a 10% chance o
 
 #### Sensitivity Analysis
 
-We conducted a local sensitivity analysis by altering each of the parameters by \pm20% and calculated the change in the man knowledge about resource a held in unit 1.  If a 20% change in the input resulted in a more than 20% change in the state variable we deemed this parameter as sensitive.  We calculated a sensitivity index following Hamby [-@hambyReviewTechniquesParameter1994]:
+We conducted a local sensitivity analysis by altering each of the parameters by \pm20% and calculated the change in the man knowledge about resource a held in unit 1.  If a \pm20% change in the input resulted in a more than \pm20% change in the state variable we deemed this parameter sensitive.  We calculated a sensitivity index following Hamby [-@hambyReviewTechniquesParameter1994]:
 
-$$ \phi_i = \frac{\% \Delta Y}{\% \Delta X_{i+i}} $$        
+$$ \phi_i = \frac{\% \Delta Y}{\% \Delta X_{i}} $$        
 Eq. 1
- 
+
 #### Scenarios
 
 **No change scenarios**
 
 1. Baseline conditions
 
-First, we explored the dynamics of the model under the different learning conditions and movement rules without any change in the availability of the resources over time.  Thus, we ran each combination of spatial learning, network learning, and random vs. preferential patch movement.  We ran 30 replicates for 50 generations with 60 agents evenly distributed across three social units for each of the eight learning/movement combinations [SM for SA on this?]. To evaluate the outcomes we measured the mean amount of knowledge for resource 'a' over generations and the risk of loss of knowledge (using a quasi-extinction threshold of five).
+First, we explored the dynamics of the model under the different learning conditions and movement rules without any change in the availability of the resources over time.  Thus, we ran each combination of spatial learning, network learning, and random vs. preferential patch movement.  We ran 30 replicates for 50 generations with 120 agents evenly distributed across three social units for each of the eight learning/movement combinations [SM for SA on this?]. To evaluate the outcomes, we measured the mean amount of knowledge for resource 'a' over generations and the risk of loss of knowledge (using a quasi-extinction threshold of five).
 
 2. Effects of different proximities
 
+- scenario 1 with cognitive distance (10, 20, 30, 60) and credibility threshold (on-off)
 
 3. Effects of different transfer types
 
+4. Effects of different resource preferences
+	 - scenario 1 w/ res-a-preference from 1 to 1.5, 0.05, n = 30
 
 **Amount of loss scenarios**
 
-We explored the implications of the loss of access/availability of one of the resource types (type 'a') to assess how different modes of learning influence the retention of knowledge.  We simulate this loss by changing patches from one type to another at a specified rate; this could represent the loss of a species or the loss of access to the species (e.g., via protectionist regulations).   For each of the eight learning combinations explored under baseline conditions we evaluated four different rates of loss that results in a decline to  80%, 60%, 20% and 0% of initial resource availability.  The loss of knowledge occurred over a 250 time-step period.
+We explored the implications of the loss of access/availability of one of the resource types (type 'a') to assess how different modes of learning influence the retention of knowledge.  We simulate this loss by changing patches from one type to another at a specified rate; this could represent the loss of a species or the loss of access to the species (e.g., via protectionist regulations).   For each of the eight learning combinations explored under baseline conditions we evaluated four different rates of loss that results in a decline to 80%, 60%, 20% and 0% of the initial resource availability in the landscape.  The loss of knowledge occurred over a 250 time-step period.
 
 **Rate of loss scenarios**
 
@@ -96,21 +100,19 @@ Total loss of 1000 (20%) over 100, 250, 500, 1000 ticks
 
 - same as loss but reduce to 10% and then return to initial value with rate varying- 
 
-- We also ran 10 replicates for each combination  for initial amounts of resource 'a' from 0.1 to 0.5 by a step of 0.05 with no change in availability over time; this allowed us to estimate the quasi-equilibrial knowledge of each resource under different availabilities.
+- We also ran 10 replicates for each combination for initial amounts of resource 'a' from 0.1 to 0.5 by a step of 0.05 with no change in availability over time; this allowed us to estimate the quasi-equilibrial knowledge of each resource under different availabilities.
 
 - 
 
-**Resource preference**
 
 
 | Scenario | Question | Parameterisation |
-| :------- | :------- | :--------------- |
+|:-------- |:-------- |:---------------- |
 | a        | who      | 1                |
 | b        | what     | 2                |
 | c        | where    | 3                |
 | d        | why      | 4                |
 | e        | when     | 5                |
-
 
 ****
 
@@ -120,21 +122,15 @@ We analysed the data visually and did not use frequentist statistics, following 
 
 ### 
 
-
-
 ### Results
 
 **SA**
 
 ...
 
-
-
 **Scenarios **
 
 ...
-
-
 
 ### Discussion
 
@@ -142,30 +138,34 @@ We analysed the data visually and did not use frequentist statistics, following 
 
 xyz
 
-
-
 **Conditions for BCH**
 
 aaa
 
-
-
 #### Next steps
-Our ABM is stylised and does not represent a number of characteristics of real social-ecological systems.  Nevertheless, it is sufficient to enable us to XYZ.  There are some kety areas where the model representation could be refined:
- 
+
+Our ABM is stylised and does not represent some characteristics of real social-ecological systems.  Nevertheless, it is sufficient to enable us to explore the conditions under which social-ecological KBP are maintained or otherwise.  There are some key areas where the model representation could be refined:
+
 - the agents are homogeneous in their propensity to learn, etc.
+
 - spatial structure of both resources and agent movement (sort of a home range)
 
 - two resources - multiple resource types
 
 - empirical/place grounding
 
+- what is erosion - practice vs protocol
+
 ### References
 
 ### SM
 
 - effects of n agents and n units
+  
+  - baseline_nunits: 0-5 units, 60, 120, 180, 240 agents, n = 10
 
 - transfer fractrion stuff
+	- transfer_fraction, parent_transfer, n = 10
 
-- who tl lear from in nwo
+- who to lear from in nw
+	- max, median, rnd, n = 30
