@@ -5,8 +5,8 @@ library(tidyverse)
 library(data.table)
 library(janitor)
 
-f <- list.files("output/data/baseline", pattern = "_gen", full.names = TRUE)
-p <- read_csv("output/data/baseline/hysteresis-baseline-agents-units-table.csv", skip = 6) |>
+f <- list.files("ms/data/baseline-nunits", pattern = "_gen", full.names = TRUE)
+p <- read_csv("ms/data/baseline-nunits/hysteresis baseline-control-table.csv", skip = 6) |>
     janitor::clean_names()
 
 ff <- lapply(f, fread) |>    # data.table::
@@ -17,13 +17,14 @@ pp <- select(p, run_number, n_units, n_agents, spatial_learn, social_learn, know
 ff <- ff |>
     left_join(pp, by = c("rep" = "run_number"))
 
-save.image("output/data/baseline/baseline.RData")
+baseline_control <- ff
+
+save.image("ms/data/baseline-control/baselineControl.RData")
 
 
 ### tag and subset
-baseline_units_agents <- ff
 
-baseline_units_agents <- baseline_units_agents |>
+baseline_control <- baseline_control |>
     mutate(scenario = case_when(
         spatial_learn == FALSE & social_learn == FALSE & know_move == FALSE ~ 1,
         spatial_learn == TRUE & social_learn == FALSE & know_move == FALSE ~ 2,
@@ -36,7 +37,7 @@ baseline_units_agents <- baseline_units_agents |>
     )) |>
     mutate(sc_tag = letters[scenario])
 
-baseline <- baseline_units_agents[n_units == 3 & n_agents == 60]
+baseline <- baseline_control[n_units == 3 & n_agents == 120]
 
 save.image("output/data/baseline/baseline.RData")
 
