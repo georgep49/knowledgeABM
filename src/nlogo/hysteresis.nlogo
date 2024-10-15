@@ -2266,7 +2266,7 @@ NetLogo 6.4.0
       <value value="&quot;../../ms/data/sa-spatial-nhb/spatial_nhb_&quot;"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="baseline-control" repetitions="30" sequentialRunOrder="false" runMetricsEveryStep="false">
+  <experiment name="sa-parenttransfer" repetitions="10" sequentialRunOrder="false" runMetricsEveryStep="false">
     <setup>setup</setup>
     <go>step</go>
     <postRun>write-csv</postRun>
@@ -2288,6 +2288,8 @@ NetLogo 6.4.0
     </enumeratedValueSet>
     <enumeratedValueSet variable="transfer-function">
       <value value="&quot;max&quot;"/>
+      <value value="&quot;median&quot;"/>
+      <value value="&quot;random&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="max-generations">
       <value value="50"/>
@@ -2301,9 +2303,7 @@ NetLogo 6.4.0
     <enumeratedValueSet variable="end-loss">
       <value value="350"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="parent-transfer">
-      <value value="0.85"/>
-    </enumeratedValueSet>
+    <steppedValueSet variable="parent-transfer" first="0.5" step="0.05" last="1"/>
     <enumeratedValueSet variable="transfer-fraction">
       <value value="0.5"/>
     </enumeratedValueSet>
@@ -2341,7 +2341,7 @@ NetLogo 6.4.0
       <value value="1.5"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="csv-file-name">
-      <value value="&quot;../../ms/data/baseline-control/baseline_control&quot;"/>
+      <value value="&quot;../../ms/data/sa-parenttransfer/parent_transfer&quot;"/>
     </enumeratedValueSet>
   </experiment>
   <experiment name="sa-asymm" repetitions="20" sequentialRunOrder="false" runMetricsEveryStep="false">
@@ -2421,6 +2421,163 @@ NetLogo 6.4.0
     <steppedValueSet variable="res-a-preference" first="0.75" step="0.05" last="1.25"/>
     <enumeratedValueSet variable="csv-file-name">
       <value value="&quot;../../ms/data/sa-asymm/sa_asymm&quot;"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="sa-cogproximity" repetitions="10" sequentialRunOrder="false" runMetricsEveryStep="false">
+    <setup>setup</setup>
+    <go>step</go>
+    <postRun>write-csv</postRun>
+    <exitCondition>not any? turtles with [generation &lt; max-generations]</exitCondition>
+    <enumeratedValueSet variable="n-units">
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="rate-return">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="rate-loss">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="k-erosion">
+      <value value="0.015"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="start-return">
+      <value value="600"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="transfer-function">
+      <value value="&quot;max&quot;"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="max-generations">
+      <value value="50"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="end-return">
+      <value value="1600"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="n-agents">
+      <value value="120"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="end-loss">
+      <value value="350"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="parent-transfer">
+      <value value="0.85"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="transfer-fraction">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="start-loss">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="memory-length">
+      <value value="5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="spatial-learn?">
+      <value value="false"/>
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="knowledge-loss?">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="social-learn?">
+      <value value="false"/>
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="know-move?">
+      <value value="false"/>
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="defect-unit">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="n-p-a">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="cognitive-proximity?">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <steppedValueSet variable="cognitive-distance-thresh" first="10" step="10" last="90"/>
+    <enumeratedValueSet variable="spatial-nhb">
+      <value value="1.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="csv-file-name">
+      <value value="&quot;../../ms/data/sa-cogproximity/sa_proximity&quot;"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="sa-spatialtransfer" repetitions="10" sequentialRunOrder="false" runMetricsEveryStep="false">
+    <setup>setup</setup>
+    <go>step</go>
+    <postRun>write-csv</postRun>
+    <exitCondition>not any? turtles with [generation &lt; max-generations]</exitCondition>
+    <enumeratedValueSet variable="n-units">
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="rate-return">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="rate-loss">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="k-erosion">
+      <value value="0.015"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="start-return">
+      <value value="600"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="transfer-function">
+      <value value="&quot;max&quot;"/>
+      <value value="&quot;median&quot;"/>
+      <value value="&quot;random&quot;"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="max-generations">
+      <value value="50"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="end-return">
+      <value value="1600"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="n-agents">
+      <value value="120"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="end-loss">
+      <value value="350"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="parent-transfer">
+      <value value="0.85"/>
+    </enumeratedValueSet>
+    <steppedValueSet variable="transfer-fraction" first="0.2" step="0.05" last="0.8"/>
+    <enumeratedValueSet variable="start-loss">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="memory-length">
+      <value value="5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="spatial-learn?">
+      <value value="false"/>
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="knowledge-loss?">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="social-learn?">
+      <value value="false"/>
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="know-move?">
+      <value value="false"/>
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="defect-unit">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="n-p-a">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="cognitive-proximity?">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="spatial-nhb">
+      <value value="1.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="csv-file-name">
+      <value value="&quot;../../ms/data/sa-spatialtransfer/spatial_transfer&quot;"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>
