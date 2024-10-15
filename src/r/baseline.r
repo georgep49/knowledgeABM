@@ -5,7 +5,7 @@ library(tidyverse)
 library(data.table)
 library(janitor)
 
-f <- list.files("ms/data/baseline-nunits", pattern = "_gen", full.names = TRUE)
+f <- list.files("ms/data/baseline-control", pattern = "_gen", full.names = TRUE)
 p <- read_csv("ms/data/baseline-nunits/hysteresis baseline-control-table.csv", skip = 6) |>
     janitor::clean_names()
 
