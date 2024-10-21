@@ -8,6 +8,8 @@ globals
   k-list
   k-gen-list
   k-ind-list
+
+  next-social-learn
 ]
 
 patches-own
@@ -59,6 +61,8 @@ to setup
     set pcolor 17
   ]
 
+  set next-social-learn ticks + social-learn-freq
+
   crt n-agents [
     set size 2
     set lineage who
@@ -73,6 +77,7 @@ to setup
     setxy random-pxcor random-pycor
   ]
 
+
   ask turtles [
     create-links-with other turtles with [unit = [unit] of myself]
   ]
@@ -86,7 +91,6 @@ to step
   [
     ;; age
     set age age + 1
-
     ;; move
     move-to-patch
 
@@ -210,82 +214,87 @@ end
 
 to social-learn
 
+  if ticks - next-social-learn = 0
+  [
     let other-a 0
-  let other-b 0
-  let candidates-a no-turtles
-  let candidates-b no-turtles
+    let other-b 0
+    let candidates-a no-turtles
+    let candidates-b no-turtles
     ;; learn from others in social network
     if social-learn?
     [
 
-    ;; myself is the turtle asked in the go who is updating their knowledge
-    let candidates link-neighbors
+      ;; myself is the turtle asked in the go who is updating their knowledge
+      let candidates link-neighbors
 
-    ifelse cognitive-proximity? [
-      set candidates-a candidates with [
-        ([k-a] of myself - k-a < cognitive-distance-thresh) and ([k-a] of myself - k-a > 0) ]
+      ifelse cognitive-proximity? [
+        set candidates-a candidates with [
+          ([k-a] of myself - k-a < cognitive-distance-thresh) and ([k-a] of myself - k-a > 0) ]
 
-      set candidates-b candidates with [
-        ([k-b] of myself - k-b < cognitive-distance-thresh) and ([k-b] of myself - k-b > 0) ]
-    ]
-    [
-      set candidates-a candidates
-      set candidates-b candidates
-    ]
-
-
-  if transfer-function = "max"
-  [
-      if any? candidates-a
+        set candidates-b candidates with [
+          ([k-b] of myself - k-b < cognitive-distance-thresh) and ([k-b] of myself - k-b > 0) ]
+      ]
       [
-        let X max-one-of candidates-a [k-a]
-        ifelse credibility-test?
-        [if random-float 100 < [credibility] of X [ set other-a [k-a] of X ]]
-        [set other-a [k-a] of X ]
-
+        set candidates-a candidates
+        set candidates-b candidates
       ]
 
-      if any? candidates-b
+
+      if transfer-function = "max"
       [
-        let X max-one-of candidates-b [k-b]
-        ifelse credibility-test?
-        [if random-float 100 < [credibility] of X [ set other-b [k-b] of X ]]
-        [set other-b [k-b] of X ]
+        if any? candidates-a
+        [
+          let X max-one-of candidates-a [k-a]
+          ifelse credibility-test?
+          [if random-float 100 < [credibility] of X [ set other-a [k-a] of X ]]
+          [set other-a [k-a] of X ]
+
+        ]
+
+        if any? candidates-b
+        [
+          let X max-one-of candidates-b [k-b]
+          ifelse credibility-test?
+          [if random-float 100 < [credibility] of X [ set other-b [k-b] of X ]]
+          [set other-b [k-b] of X ]
+        ]
       ]
-    ]
 
-    if transfer-function = "median"
-    [
+      if transfer-function = "median"
+      [
 
-      if any? candidates-a [ set other-a median [k-a] of candidates-a]
-      if any? candidates-b [ set other-b median [k-b] of candidates-b]
-    ]
+        if any? candidates-a [ set other-a median [k-a] of candidates-a]
+        if any? candidates-b [ set other-b median [k-b] of candidates-b]
+      ]
 
-  if transfer-function = "random"
-    [
-    if any? candidates-a
-    [
-      let X one-of candidates-a
-      ifelse credibility-test?
-        [if random-float 100 < [credibility] of X [ set other-a [k-a] of X ]]
-      [set other-a [k-a] of X ]
+      if transfer-function = "random"
+      [
+        if any? candidates-a
+        [
+          let X one-of candidates-a
+          ifelse credibility-test?
+          [if random-float 100 < [credibility] of X [ set other-a [k-a] of X ]]
+          [set other-a [k-a] of X ]
 
-    ]
+        ]
 
-    if any? candidates-b
-    [
-      let X one-of candidates-b
-        ifelse credibility-test?
-        [if random-float 100 < [credibility] of X [ set other-b [k-b] of X ]]
+        if any? candidates-b
+        [
+          let X one-of candidates-b
+          ifelse credibility-test?
+          [if random-float 100 < [credibility] of X [ set other-b [k-b] of X ]]
           [set other-a [k-b] of X ]
-    ]
+        ]
 
-  ]
+      ]
 
       ;; this assumes you can only learn...
-    if other-a > k-a [set k-a min (list (k-a + ((other-a - k-a) * transfer-fraction)) 100)]
-    if other-b > k-b [set k-b min (list (k-b + ((other-b - k-b) * transfer-fraction)) 100)]
+      if other-a > k-a [set k-a min (list (k-a + ((other-a - k-a) * transfer-fraction)) 100)]
+      if other-b > k-b [set k-b min (list (k-b + ((other-b - k-b) * transfer-fraction)) 100)]
     ]
+
+    set next-social-learn ticks + social-learn-freq
+  ]
 
 end
 
@@ -743,7 +752,7 @@ n-agents
 n-agents
 10
 200
-60.0
+120.0
 10
 1
 NIL
@@ -971,7 +980,7 @@ max-generations
 max-generations
 0
 100
-72.0
+60.0
 1
 1
 NIL
@@ -1205,6 +1214,21 @@ Orange - number agents with lt 50 k-a\nRed - number agents with lt 5 k-a\n
 11
 0.0
 1
+
+SLIDER
+213
+683
+385
+716
+social-learn-freq
+social-learn-freq
+1
+10
+1.0
+1
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
