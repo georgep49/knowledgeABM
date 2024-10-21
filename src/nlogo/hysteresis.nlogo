@@ -1776,7 +1776,7 @@ NetLogo 6.4.0
       <value value="1600"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="n-agents">
-      <value value="60"/>
+      <value value="120"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="end-loss">
       <value value="350"/>
@@ -1811,8 +1811,11 @@ NetLogo 6.4.0
     <enumeratedValueSet variable="n-p-a">
       <value value="0.5"/>
     </enumeratedValueSet>
+    <enumeratedValueSet variable="store-individuals?">
+      <value value="true"/>
+    </enumeratedValueSet>
     <enumeratedValueSet variable="csv-file-name">
-      <value value="&quot;../output/data/one_run/hysteresis_one&quot;"/>
+      <value value="&quot;../../ms/data/one_run/hysteresis_one&quot;"/>
     </enumeratedValueSet>
   </experiment>
   <experiment name="baseline-agents-units" repetitions="10" sequentialRunOrder="false" runMetricsEveryStep="false">
