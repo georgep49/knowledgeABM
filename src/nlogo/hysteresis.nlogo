@@ -1,4 +1,5 @@
 extensions [palette csv]
+__includes [ "bimodality.nls" ]
 
 globals
 [
@@ -10,6 +11,8 @@ globals
   k-ind-list
 
   next-social-learn
+
+  k-bimodal
 ]
 
 patches-own
@@ -77,6 +80,7 @@ to setup
     setxy random-pxcor random-pycor
   ]
 
+  set k-bimodal agent-k-bimodal
 
   ask turtles [
     create-links-with other turtles with [unit = [unit] of myself]
@@ -111,6 +115,7 @@ to step
   update-k-list
   update-k-gen-list
 
+  set k-bimodal agent-k-bimodal
   if store-individuals? [ update-k-ind-list ]
 
   tick
@@ -406,7 +411,7 @@ to update-k-list
     let h6 (map [i -> (word "ka.lt50.unit" i)] unit-list)
     let h7 (map [i -> (word "ka.lt5.unit" i)] unit-list)
 
-    set k-list lput (sentence "rep" "ticks" "fraction.a" h1 h2 h3 h4 h5 h6 h7) k-list
+    set k-list lput (sentence "rep" "ticks" "fraction.a" h1 h2 h3 h4 h5 h6 h7 "bimodal.a" "bimodal.b") k-list
   ]
 
   let fraction-a (count patches with [resource-type = "a"]) / (count patches)
@@ -421,7 +426,7 @@ to update-k-list
   let ka-lt50  (map [i -> count turtles with [unit = i and k-a < 50]] unit-list)
   let ka-lt5  (map [i -> count turtles with [unit = i and k-a < 5]] unit-list)
 
-  set k-list lput (sentence behaviorspace-run-number ticks fraction-a n-unit ka-unit kb-unit ka-var ka-range ka-lt50 ka-lt5) k-list
+  set k-list lput (sentence behaviorspace-run-number ticks fraction-a n-unit ka-unit kb-unit ka-var ka-range ka-lt50 ka-lt5 (item 0 k-bimodal) (item 1 k-bimodal)) k-list
 end
 
 
@@ -429,7 +434,7 @@ to update-k-gen-list
 
   if ticks = 0 [
     set k-gen-list []
-    set k-gen-list lput (sentence "rep" "tick" "fraction.a" "gen" "unit" "n" "ka" "kb" "ka.var" "ka.range" "ka.lt50" "ka.lt5") k-gen-list
+    set k-gen-list lput (sentence "rep" "tick" "fraction.a" "gen" "unit" "n" "ka" "kb" "ka.var" "ka.range" "ka.lt50" "ka.lt5" "bimodal.a" "bimodal.b") k-gen-list
   ]
 
   let gen-list sort remove-duplicates [generation] of turtles
@@ -453,7 +458,7 @@ to update-k-gen-list
         let ka-lt50-unit count turtles with [unit = u and generation = g and k-a < 50]
         let ka-lt5-unit count turtles with [unit = u and generation = g and k-a < 5]
 
-        set k-gen-list lput (sentence behaviorspace-run-number ticks fraction-a g u n-unit ka-unit kb-unit ka-var-unit ka-range-unit ka-lt50-unit ka-lt5-unit)  k-gen-list
+        set k-gen-list lput (sentence behaviorspace-run-number ticks fraction-a g u n-unit ka-unit kb-unit ka-var-unit ka-range-unit ka-lt50-unit ka-lt5-unit (item 0 k-bimodal) (item 1 k-bimodal))  k-gen-list
       ]
     ]
   ])
@@ -491,6 +496,17 @@ end
 to-report k-range [a-set]
   report max [k-a] of a-set - min [k-a] of a-set
 end
+
+
+to-report agent-k-bimodal
+
+  let ba bimodality-coeff ([k-a] of turtles) TRUE
+  let bb bimodality-coeff ([k-b] of turtles) TRUE
+
+  report (list ba bb)
+
+end
+
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
@@ -713,7 +729,7 @@ SWITCH
 414
 spatial-learn?
 spatial-learn?
-0
+1
 1
 -1000
 
@@ -765,7 +781,7 @@ SWITCH
 486
 know-move?
 know-move?
-0
+1
 1
 -1000
 
@@ -815,10 +831,10 @@ NIL
 HORIZONTAL
 
 SWITCH
-561
-433
-707
-466
+562
+458
+708
+491
 knowledge-loss?
 knowledge-loss?
 1
@@ -980,7 +996,7 @@ max-generations
 max-generations
 0
 100
-60.0
+30.0
 1
 1
 NIL
@@ -1175,7 +1191,7 @@ SWITCH
 522
 cognitive-proximity?
 cognitive-proximity?
-0
+1
 1
 -1000
 
@@ -1229,6 +1245,38 @@ social-learn-freq
 1
 NIL
 HORIZONTAL
+
+MONITOR
+671
+329
+736
+374
+Bimodal a
+item 0 k-bimodal
+3
+1
+11
+
+MONITOR
+672
+381
+737
+426
+Bimodal b
+item 1 k-bimodal
+3
+1
+11
+
+TEXTBOX
+655
+432
+761
+458
+B > 5/9 - bimodality
+10
+0.0
+1
 
 @#$#@#$#@
 ## WHAT IS IT?

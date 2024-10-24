@@ -21,7 +21,8 @@ bimodality_coefficient <- function(x, finite = TRUE,...){
 
 skewness <- function(x, finite = TRUE, ...) {
 	n <- length(x)
-	S <- (1 / n) * sum((x - mean(x))^3) / (((1 / n) * sum((x - mean(x)) ^2)) ^ 1.5)
+	S <- (1 / n) * sum((x - mean(x))^3)  / (((1 / n) * sum((x - mean(x)) ^2)) ^ 1.5)
+	
 	if (finite == FALSE) {
 		S <- S
 	} else {
@@ -34,13 +35,12 @@ skewness <- function(x, finite = TRUE, ...) {
 
 kurtosis <- function(x, finite){
 	n <- length(x)
-	K <- (1 / n)  * sum((x - mean(x))^4)  / (((1 / n) * sum((x - mean(x))^2))^2) - 3
-	
+	K <- (1 / n) * sum((x - mean(x))^4)  / (((1 / n) * sum((x - mean(x))^2))^2) - 3
 	if(finite == FALSE) {
-		K <- K
-	} else {
-		K <- ((n - 1) * ((n + 1)* K - 3 * (n - 1)) / ((n - 2) * (n - 3))) + 3
-	}
+	 	K <- K
+	 } else {
+	 	K <- ((n - 1) * ((n + 1)* K - 3 * (n - 1)) / ((n - 2) * (n - 3))) + 3
+	 }
 	
     return(K)	
 }

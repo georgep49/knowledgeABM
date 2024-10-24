@@ -1,10 +1,29 @@
 ### Various visualisations
 
+library(tidyverse)
+library(data.table)
+
 ####
 ## Baseline
 ####
 
 load("ms/data/baseline-control/baselineControl.RData")
+###
+
+sim_t_summary <- baseline_control[,
+                            .(mean_ka = mean(ka), mean_kb = mean(kb)),
+                            by = .(tick, unit, scenario)]
+
+sim_g_summary <- baseline_control[,
+                            .(mean_ka = mean(ka), mean_kb = mean(kb)),
+                            by = .(gen, unit, scenario)]
+
+sim_genbyrep_summary <- baseline_control[,
+                            .(mean_ka = mean(ka), mean_kb = mean(kb)),
+                            by = .(gen, unit, rep, scemario)]
+
+save.image("ms/data/baseline-control/baselineControl.RData")
+####
 
 # scenario labeller
 sc_labels <- c("a" = "null",
@@ -18,10 +37,10 @@ sc_labels <- c("a" = "null",
 
 ###
 # distribution of final knowledge of  'a'
-base_mean <- sim_g_summary[gen == 50 & scenario == 1 & baseline == TRUE]$mean_ka
+base_mean <- sim_g_summary[gen == 50]$mean_ka
 
-# boxplot for final k-a under baseline (60, 3) conditions
-ggplot(data = baseline %>% filter(gen == 50) %>% slice_sample(prop = 0.1)) +
+# boxplot for final k-a under baseline (120, 3) conditions
+ggplot(data = baseline_control %>% filter(gen == 50) %>% slice_sample(prop = 0.1)) +
     geom_boxplot(aes(x = unit, y = ka, group = unit), outliers = FALSE) +
     geom_jitter(aes(x = unit, y = ka, group = unit), alpha = 0.1, width = 0.1) +
     geom_hline(yintercept = median(base_mean), col = "red") +
@@ -32,14 +51,14 @@ ggplot(data = baseline %>% filter(gen == 50) %>% slice_sample(prop = 0.1)) +
 # median of ka by generation for each scenario
 sim_g_summary$sc_tag <- letters[sim_g_summary$scenario]
 
-ggplot(data = sim_g_summary %>% filter(baseline == TRUE)) +
+ggplot(data = sim_g_summary) +
     geom_line(aes(x = gen, y = mean_ka, col = factor(unit), group = unit)) +
     xlim(0, 50) +
     facet_wrap(~sc_tag, labeller = labeller(sc_tag = sc_labels))
 
 ###
 # Unit 1 for eight reps for each scenario (mean k-a)
-sample_reps <- baseline[order(scenario, rep)][
+sample_reps <- baseline_control[order(scenario, rep)][
         , sc_rep := .GRP, by = .(scenario, rep)][
         , sc_rep := (sc_rep %% 30) + 1][
         , .(mean_ka = mean(ka), sc_tag = letters[scenario]), by = .(scenario, rep, sc_rep, gen, unit)]
@@ -65,7 +84,7 @@ ggplot(data = sample_s5_reps) +
 ###
 # Need to show distribution of turtles for each gen for k-a
 # Scenario 5
-f <- fread("output/data/one-run/hysteresis_one_inds_1.csv")
+f <- fread("ms/data/one_run/hysteresis_one_inds_1.csv")
 one_run <- f[, m := mean(ka), by = .(gen, unit, lineage)]
 
 
