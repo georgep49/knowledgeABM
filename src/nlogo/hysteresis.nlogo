@@ -173,9 +173,9 @@ to spatial-learn
     if any? candidates-b
     [
       let X max-one-of candidates-b [k-b]
-        ifelse credibility-test?
+      ifelse credibility-test?
       [if random-float 100 < [credibility] of X [ set other-b [k-b] of X ]]
-          [set other-a [k-a] of X ]
+      [set other-b [k-b] of X ]
     ]
   ]
 
@@ -201,7 +201,7 @@ to spatial-learn
       let X one-of candidates-b
         ifelse credibility-test?
         [if random-float 100 < [credibility] of X [ set other-b [k-b] of X ]]
-          [set other-b [k-b] of X ]
+        [set other-b [k-b] of X ]
     ]
 
   ]
@@ -506,7 +506,6 @@ to-report agent-k-bimodal
   report (list ba bb)
 
 end
-
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
@@ -740,7 +739,7 @@ SWITCH
 451
 social-learn?
 social-learn?
-1
+0
 1
 -1000
 

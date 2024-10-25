@@ -19,7 +19,6 @@ end
 to-report bimodality-coeff [x finite]
 
   let B 0
-  show finite
   
   ifelse finite = TRUE
   [

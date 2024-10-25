@@ -32,6 +32,8 @@ calibrate <- calibrate |>
     )) |>
     mutate(sc_tag = letters[scenario])
 
+    
+save.image("output/data/calibrate/calibrate.RData")
 
 # zip and remove
 f <- list.files("output/data/calibrate", pattern = "_gen|_time", full.names = TRUE)
@@ -43,7 +45,7 @@ save.image("output/data/calibrate/calibrate.RData")
 ####
 
 # basically want to plot mean k-a at 50 gens vs n-p-a by scenario
-load("output/data/calibrate/calibrate.RData")
+load("ms/data/calibrate/calibrate.RData")
 
 # scenario labeller
 sc_labels <- c("a" = "null",
