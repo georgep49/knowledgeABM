@@ -13,7 +13,7 @@ process_bch_sims <- function(base_path, nl_file_name, save_file)
     nl_files <- list.files(base_path, pattern = "_gen", full.names = TRUE)
     
     cat(paste("Loading", length(nl_files), "csv files...", "\n"))
-    bhs_file <- fread(p_name, skip = 6) |>
+    bhs_file <- fread(file = p_name, skip = 6) |>
         janitor::clean_names()
 
     # netlogo bhs output
@@ -37,6 +37,7 @@ process_bch_sims <- function(base_path, nl_file_name, save_file)
         mutate(sc_tag = letters[scenario])
 
     cat(paste("Saving R image...", "\n"))
+
     save(list = ls(all.names = TRUE), file = s_name, envir = environment())
     # https://stackoverflow.com/questions/49013427/r-saving-image-within-function-is-not-loading
 }
