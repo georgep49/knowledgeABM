@@ -666,7 +666,7 @@ start-loss
 start-loss
 0
 500
-0.0
+110.0
 10
 1
 NIL
@@ -812,7 +812,7 @@ rate-loss
 rate-loss
 0
 10
-10.0
+9.0
 1
 1
 NIL
@@ -840,7 +840,7 @@ SWITCH
 491
 knowledge-loss?
 knowledge-loss?
-1
+0
 1
 -1000
 
@@ -999,7 +999,7 @@ max-generations
 max-generations
 0
 100
-30.0
+64.0
 1
 1
 NIL
@@ -1751,13 +1751,13 @@ NetLogo 6.4.0
       <value value="&quot;max&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="max-generations">
-      <value value="30"/>
+      <value value="40"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="end-return">
       <value value="1600"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="n-agents">
-      <value value="60"/>
+    <enumeratedValueSet variable="n-agents-per-unit">
+      <value value="40"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="end-loss">
       <value value="350"/>
@@ -1794,7 +1794,7 @@ NetLogo 6.4.0
     </enumeratedValueSet>
     <steppedValueSet variable="n-p-a" first="0.05" step="0.025" last="0.75"/>
     <enumeratedValueSet variable="csv-file-name">
-      <value value="&quot;../output/data/calibrate/hysteresis_calibrate&quot;"/>
+      <value value="&quot;../../ms/data/calibrate/hysteresis_calibrate&quot;"/>
     </enumeratedValueSet>
   </experiment>
   <experiment name="one-run-all-agents" repetitions="1" sequentialRunOrder="false" runMetricsEveryStep="false">
@@ -2038,8 +2038,8 @@ NetLogo 6.4.0
     <enumeratedValueSet variable="end-return">
       <value value="850"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="n-agents">
-      <value value="120"/>
+    <enumeratedValueSet variable="n-agents-per-unit">
+      <value value="40"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="end-loss">
       <value value="350"/>
@@ -2078,7 +2078,7 @@ NetLogo 6.4.0
       <value value="0.5"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="csv-file-name">
-      <value value="&quot;amt-loss-return/hysteresis_amt&quot;"/>
+      <value value="&quot;../../ms/data/amt-loss-return/hysteresis_amt&quot;"/>
     </enumeratedValueSet>
     <subExperiment>
       <enumeratedValueSet variable="rate-return">
@@ -2143,8 +2143,8 @@ NetLogo 6.4.0
     <enumeratedValueSet variable="transfer-function">
       <value value="&quot;max&quot;"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="n-agents">
-      <value value="120"/>
+    <enumeratedValueSet variable="n-agents-per-unit">
+      <value value="40"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="max-generations">
       <value value="55"/>
@@ -2183,7 +2183,7 @@ NetLogo 6.4.0
       <value value="0.5"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="csv-file-name">
-      <value value="&quot;rate-loss-return/hysteresis_loss&quot;"/>
+      <value value="&quot;../../ms/data/rate-loss-return/hysteresis_loss&quot;"/>
     </enumeratedValueSet>
     <subExperiment>
       <enumeratedValueSet variable="end-loss">

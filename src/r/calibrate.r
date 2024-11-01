@@ -6,40 +6,16 @@ library(tidyverse)
 library(data.table)
 library(janitor)
 
-f <- list.files("output/data/calibrate", pattern = "_gen", full.names = TRUE)
+source("src/r/processSimsFuncs.r")
 
-p <- read_csv("output/data/calibrate/hysteresis-calibrate-table.csv", skip = 6) |>
-    janitor::clean_names()
+process_bch_sims(base_path = "ms/data/calibrate",
+    nl_file_name = "hysteresis calibrate-table",
+    save_file = "calibrate")
 
-calibrate <- lapply(f, fread) |>    # data.table::
-    bind_rows()
+save.image("ms/data/calibrate/calibrate.RData")
 
-pp <- select(p, run_number, n_p_a, spatial_learn, social_learn, know_move)
-
-calibrate <- calibrate |>
-    left_join(pp, by = c("rep" = "run_number"))
-
-calibrate <- calibrate |>
-    mutate(scenario = case_when(
-        spatial_learn == FALSE & social_learn == FALSE & know_move == FALSE ~ 1,
-        spatial_learn == TRUE & social_learn == FALSE & know_move == FALSE ~ 2,
-        spatial_learn == FALSE & social_learn == TRUE & know_move == FALSE ~ 3,
-        spatial_learn == TRUE & social_learn == TRUE & know_move == FALSE ~ 4,
-        spatial_learn == FALSE & social_learn == FALSE & know_move == TRUE ~ 5,
-        spatial_learn == TRUE & social_learn == FALSE & know_move == TRUE ~ 6,
-        spatial_learn == FALSE & social_learn == TRUE & know_move == TRUE ~ 7,
-        spatial_learn == TRUE & social_learn == TRUE & know_move == TRUE ~ 8,
-    )) |>
-    mutate(sc_tag = letters[scenario])
-
-    
-save.image("output/data/calibrate/calibrate.RData")
-
-# zip and remove
-f <- list.files("output/data/calibrate", pattern = "_gen|_time", full.names = TRUE)
-zip::zip(zipfile = "output/data/calibrate/calibrate.zip", files = f)
-file.remove(list.files("output/data/calibrate", pattern = ".csv", full.names = TRUE))
-#
+tidy_bch_sims(base_path = "ms/data/calibrate",
+    zip_file = "calibrate")
 
 save.image("output/data/calibrate/calibrate.RData")
 ####
@@ -57,17 +33,50 @@ sc_labels <- c("a" = "null",
     "g" = "social + pref move",
     "h" = "spatial + social + pref-move")
 
-X <- calibrate[gen == 25, 
+calibrate_sc35 <- calibrate[gen == 35, 
         .(mean_ka = mean(ka), range_ka = mean(ka.range)), 
         by = .(scenario, sc_tag, rep, unit, n_p_a)]
 
-ggplot(data = X) +
+c35_gg <- ggplot(data = calibrate_sc35) +
     geom_point(aes(x = n_p_a, y = mean_ka, col = factor(unit))) +
     scale_colour_brewer(type = "qual", palette = "Dark2") +
-    geom_smooth(aes(x = n_p_a, y = mean_ka)) +
+   # geom_smooth(aes(x = n_p_a, y = mean_ka)) +
     facet_wrap(~sc_tag, labeller = labeller(sc_tag = sc_labels))
 
-ggplot(data = X) +
+c35_range_gg <- ggplot(data = calibrate_sc35) +
     geom_point(aes(x = n_p_a, y = range_ka, col = factor(unit))) +
     scale_colour_brewer(type = "qual", palette = "Dark2") +
     facet_wrap(~sc_tag, labeller = labeller(sc_tag = sc_labels))
+
+
+# build gams for prediction to other scenarios
+load("ms/data/calibrate/calibrate.RData")
+library(broom)
+library(purrr)
+library(mgcv)
+
+calibrate_gam <- calibrate[gen == 35, c("rep", "ka", "n_p_a", "unit", "scenario")][, .(mean(ka)), by = .(rep, scenario, n_p_a)]
+
+# create a GAM for each scenario
+gam_list <- vector(mode = "list", length = 8)
+pred_list <-  vector(mode = "list", length = 8)
+
+# loop over the scenarios
+for (s in 1:8)
+{
+    x <- calibrate_gam[scenario == s]
+    gam_list[[s]] <- gam(V1 ~ s(n_p_a), data = x)
+    pred_list[[s]] <- predict(gam_list[[s]], newdata = df, se.fit = TRUE) |> 
+        data.frame() |>
+        mutate(n = seq(0.05, 0.75, 0.05))
+}
+
+# bind together
+pred_npa_gams <- bind_rows(pred_list, .id = "scenario")
+
+# plot...
+# ggplot() +
+#     geom_point(data = calibrate_gam, aes(x = n_p_a, y = V1), col = "dark grey") +
+#     geom_line(data = pred_df, aes(x = n, y = fit), col = "red") +
+#     facet_wrap(~scenario) +
+#     theme_bw()

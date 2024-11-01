@@ -17,7 +17,7 @@ sa_defect <- sim_all
 gdata::keep(sa_defect, file_name, sure = TRUE)
 save.image(file_name)
 
-
+src/r/batchTidy.r
 file_name <- "src/nlogo/sa-parenttransfer/saParentTransfer.RData"
 load(file_name)
 source("src/r/processSimsFuncs.r", encoding = "UTF-8")

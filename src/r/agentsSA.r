@@ -48,6 +48,10 @@ f <- list.files("ms/data/baseline-nunits", pattern = "_gen|_time", full.names = 
 zip::zip(zipfile = "ms/data/baseline_units_agents.zip", files = f)
 file.remove(f)
 
+save.image("ms/data/baseline-nunits/baselineNAgentsUnits.RData")
+
+
+
 ######
 load("output/data/baseline/baseline.RData")
 
