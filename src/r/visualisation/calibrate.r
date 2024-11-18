@@ -65,6 +65,7 @@ library(mgcv)
 
 calibrate_gam <- calibrate[gen == 35, c("rep", "ka", "n_p_a", "unit", "scenario")][, .(mean(ka)), by = .(rep, scenario, n_p_a)]
 
+calibrate_gam$sc_tag <- letters[scenario]
 # create a GAM for each scenario
 df <- data.frame(n_p_a = seq(0.05, 0.75, 0.025))
 
@@ -85,11 +86,24 @@ pred_npa_gams <- bind_rows(pred_list, .id = "scenario")
 base50 <- filter(pred_npa_gams, n == 0.5 & scenario == 1)$fit
 
 # plot...
+# scenario labeller
+sc_labels <- c("a" = "null",
+    "b" = "spatial",
+    "c" = "social",
+    "d" = "spatial + social",
+    "e" = "pref move",
+    "f" = "spatial + pref move",
+    "g" = "social + pref move",
+    "h" = "spatial + social + pref-move")
+
+
 calibrate_gams_gg <- ggplot() +
     geom_point(data = calibrate_gam, aes(x = n_p_a, y = V1), col = "dark grey") +
     geom_line(data = pred_npa_gams, aes(x = n, y = fit), col = "red") +
     geom_hline(yintercept = base50, linetype = 2) +
     geom_vline(xintercept = 0.5, linetype = 2) +
+    labs(x = "Abundance of resource 'a'",
+         y = "Knowledge of resource 'a'") +
     facet_wrap(~scenario) +
     theme_bw()
 

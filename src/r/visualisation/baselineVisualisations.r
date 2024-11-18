@@ -57,8 +57,6 @@ final_units <- ggplot(data = baseline_control[gen == 40] %>% slice_sample(prop =
     facet_wrap(~sc_tag, labeller = labeller(sc_tag = sc_labels)) +
     theme_bw()
 
-
-
 ###
 # median of ka by generation for each scenario
 sim_g_summary$sc_tag <- letters[sim_g_summary$scenario]
@@ -103,12 +101,19 @@ sample_s5_gg <- ggplot(data = sample_s5_reps) +
 f <- fread("ms/data/one-run/hysteresis_one_inds_1.csv")
 one_run <- f[, m := mean(ka), by = .(gen, unit, lineage)]
 
-lineage_gg <- ggplot(one_run ) +
-    geom_line(aes(x = gen, y = m, group = lineage, col = factor(lineage))) +
+lineage_gg <- ggplot(one_run) +
+    geom_line(aes(x = gen, y = m, group = lineage, col = lineage), alpha = 0.6) +
     facet_wrap(~unit) +
-    theme(legend.position = "none")
+    scale_colour_paletteer_c("scico::berlin", 30, direction = 1) +
+    theme_bw() +
+    theme(legend.position = "none") 
 
 
+##
+library(svglite)
+svglite(file = "finalUnits.svg", width = 11.5, height = 8.5, fix_text_size = FALSE)  
+final_units
+dev.off()
 
 
 

@@ -48,29 +48,36 @@ library(janitor)
 # [["rate-return" 0 5]["rate-loss" 5]]
 
 load("ms/data/amt-loss-return/amtLossReturn.RData")
-load()
+load("ms/data/calibrate/calibrate.RData")
 
 amt_loss_return[, no_return := rate_return == 0]
 
-sc <- 5
-x <- amt_loss_return[scenario == sc]|>
-    group_by(gen, rate_loss, rate_return, no_return, rep) |>
-    summarise(mka = mean(ka), fa = mean(fraction.a)) |>
-    ungroup()
 
-df <- data.frame(n_p_a = x$fa)
-x$pp <- predict(object = s, newdata = df, type = "response")
+plot_list <- vector(mode = "list", length = 8)
 
-y <- x |>
-    group_by(gen, rate_loss, rate_return, no_return) |>
-    summarise(fa = mean(fa), pp = mean(pp)) |>
-    ungroup()
+for (sc in 1:8)
+{
+    x <- amt_loss_return[scenario == sc]|>
+        group_by(gen, rate_loss, rate_return, no_return, rep) |>
+        summarise(mka = mean(ka), fa = mean(fraction.a)) |>
+        ungroup()
 
-ggplot() +
-    geom_line(data = x, aes(x = gen, y = mka, col = as.factor(rate_return), group = rep),alpha = 0.5) +
-    geom_line(data = y, aes(x = gen, y = fa * 100)) +
-    geom_line(data = y, aes(x = gen, y = pp), linetype = 2) +
-    facet_grid(no_return ~ rate_loss) +
-    scale_colour_brewer(type = "qual", palette = "Dark2", name = "Return rate") +
-    xlim(0,55) +
-    theme_bw()
+    df <- data.frame(n_p_a = x$fa)
+    x$pp <- predict(object = gam_list[[sc]], newdata = df, type = "response")
+
+    y <- x |>
+        group_by(gen, rate_loss, rate_return, no_return) |>
+        summarise(fa = mean(fa), pp = mean(pp)) |>
+        ungroup()
+
+    plot_list[[sc]] <- ggplot() +
+        geom_line(data = x, aes(x = gen, y = mka, col = as.factor(rate_return), group = rep),alpha = 0.5) +
+        geom_line(data = y, aes(x = gen, y = fa * 100)) +
+        geom_line(data = y, aes(x = gen, y = pp), linetype = 2) +
+        facet_grid(no_return ~ rate_loss) +
+        scale_colour_brewer(type = "qual", palette = "Dark2", name = "Return rate") +
+        xlim(0,55) +
+        theme_bw()
+}
+
+save.image("ms/data/amt-loss-return/amtLossReturn.RData")
