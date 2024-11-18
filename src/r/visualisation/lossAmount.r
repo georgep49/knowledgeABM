@@ -48,6 +48,7 @@ library(janitor)
 # [["rate-return" 0 5]["rate-loss" 5]]
 
 load("ms/data/amt-loss-return/amtLossReturn.RData")
+load()
 
 amt_loss_return[, no_return := rate_return == 0]
 

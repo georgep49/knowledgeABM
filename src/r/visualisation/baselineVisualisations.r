@@ -33,6 +33,8 @@ save.image("ms/data/control/control.RData")
 
 ####
 
+load("ms/data/control/control.RData")
+
 # scenario labeller
 sc_labels <- c("a" = "null",
     "b" = "spatial",
@@ -55,11 +57,13 @@ final_units <- ggplot(data = baseline_control[gen == 40] %>% slice_sample(prop =
     facet_wrap(~sc_tag, labeller = labeller(sc_tag = sc_labels)) +
     theme_bw()
 
+
+
 ###
 # median of ka by generation for each scenario
 sim_g_summary$sc_tag <- letters[sim_g_summary$scenario]
 
-ggplot(data = sim_g_summary) +
+gen_units <- ggplot(data = sim_g_summary) +
     geom_line(aes(x = gen, y = mean_ka, col = factor(unit), group = unit)) +
     xlim(0, 40) +
     geom_hline(yintercept = base_mean, col = "red", linetype = 2) +
