@@ -78,6 +78,13 @@ for (sc in 1:8)
         scale_colour_brewer(type = "qual", palette = "Dark2", name = "Return rate") +
         xlim(0,55) +
         theme_bw()
+
 }
 
 save.image("ms/data/amt-loss-return/amtLossReturn.RData")
+
+library(svglite)
+library(patchwork)
+svglite(file = "hysteresis.svg", width = 11.5, height = 8.5, fix_text_size = FALSE) 
+plot_list[[5]] / plot_list[[7]]
+dev.off()

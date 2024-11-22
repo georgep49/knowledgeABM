@@ -2015,7 +2015,7 @@ NetLogo 6.4.0
       <value value="&quot;../output/data/hysteresis_baseline&quot;"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="amount-of-loss-return" repetitions="20" sequentialRunOrder="false" runMetricsEveryStep="false">
+  <experiment name="counterpa" repetitions="50" sequentialRunOrder="false" runMetricsEveryStep="false">
     <setup>setup</setup>
     <go>step</go>
     <postRun>write-csv</postRun>
@@ -2058,7 +2058,6 @@ NetLogo 6.4.0
     </enumeratedValueSet>
     <enumeratedValueSet variable="spatial-learn?">
       <value value="false"/>
-      <value value="true"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="knowledge-loss?">
       <value value="true"/>
@@ -2068,7 +2067,6 @@ NetLogo 6.4.0
       <value value="true"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="know-move?">
-      <value value="false"/>
       <value value="true"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="defect-unit">
@@ -2078,53 +2076,15 @@ NetLogo 6.4.0
       <value value="0.5"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="csv-file-name">
-      <value value="&quot;../../ms/data/amt-loss-return/hysteresis_amt&quot;"/>
+      <value value="&quot;../../ms/data/counterpa/counterpa&quot;"/>
     </enumeratedValueSet>
-    <subExperiment>
-      <enumeratedValueSet variable="rate-return">
-        <value value="0"/>
-        <value value="1"/>
-      </enumeratedValueSet>
-      <enumeratedValueSet variable="rate-loss">
-        <value value="1"/>
-      </enumeratedValueSet>
-    </subExperiment>
-    <subExperiment>
-      <enumeratedValueSet variable="rate-return">
-        <value value="0"/>
-        <value value="2"/>
-      </enumeratedValueSet>
-      <enumeratedValueSet variable="rate-loss">
-        <value value="2"/>
-      </enumeratedValueSet>
-    </subExperiment>
-    <subExperiment>
-      <enumeratedValueSet variable="rate-return">
-        <value value="0"/>
-        <value value="3"/>
-      </enumeratedValueSet>
-      <enumeratedValueSet variable="rate-loss">
-        <value value="3"/>
-      </enumeratedValueSet>
-    </subExperiment>
-    <subExperiment>
-      <enumeratedValueSet variable="rate-return">
-        <value value="0"/>
-        <value value="4"/>
-      </enumeratedValueSet>
-      <enumeratedValueSet variable="rate-loss">
-        <value value="4"/>
-      </enumeratedValueSet>
-    </subExperiment>
-    <subExperiment>
-      <enumeratedValueSet variable="rate-return">
-        <value value="0"/>
-        <value value="5"/>
-      </enumeratedValueSet>
-      <enumeratedValueSet variable="rate-loss">
-        <value value="5"/>
-      </enumeratedValueSet>
-    </subExperiment>
+    <enumeratedValueSet variable="rate-return">
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="rate-loss">
+      <value value="3"/>
+    </enumeratedValueSet>
+    <steppedValueSet variable="res-a-preference" first="1" step="0.025" last="1.25"/>
   </experiment>
   <experiment name="rate-of-loss-return" repetitions="20" sequentialRunOrder="false" runMetricsEveryStep="true">
     <setup>setup</setup>

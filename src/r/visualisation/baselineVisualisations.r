@@ -82,7 +82,8 @@ sample_scen_gg <- ggplot(sample_reps[sc_rep %in% sr & unit == 1]) +
     facet_wrap(~sc_tag, labeller = labeller(sc_tag = sc_labels)) +
     scale_colour_brewer(type = "qual", palette = "Dark2") +
     xlim(c(0, 50)) +
-    theme(legend.position = "none")
+    theme_bw() +
+    theme(legend.position = "none") 
 
 ###
 # Each unit for nine reps of scenario 5
@@ -93,7 +94,8 @@ sample_s5_gg <- ggplot(data = sample_s5_reps) +
     xlim(c(0, 40)) +
     ylim(c(0, 100)) +
     facet_wrap(~sc_rep) +
-    scale_colour_brewer(type = "qual", palette = "Dark2")
+    scale_colour_brewer(type = "qual", palette = "Dark2") +
+    theme_bw()
 
 ###
 # Need to show distribution of turtles for each gen for k-a
@@ -101,18 +103,25 @@ sample_s5_gg <- ggplot(data = sample_s5_reps) +
 f <- fread("ms/data/one-run/hysteresis_one_inds_1.csv")
 one_run <- f[, m := mean(ka), by = .(gen, unit, lineage)]
 
+one_run <- one_run |>
+    group_by(lineage) |>
+    mutate(low = m[gen == 50 & age == 0] < 20) |>
+    ungroup()
+
+library(paletteer)
+
 lineage_gg <- ggplot(one_run) +
-    geom_line(aes(x = gen, y = m, group = lineage, col = lineage), alpha = 0.6) +
+    geom_line(aes(x = gen, y = m, group = lineage, col = low), alpha = 0.6) +
     facet_wrap(~unit) +
-    scale_colour_paletteer_c("scico::berlin", 30, direction = 1) +
+    paletteer::scale_colour_paletteer_d("suffrager::classic", direction = -1) +
     theme_bw() +
-    theme(legend.position = "none") 
+    theme(legend.position = "none")
 
 
 ##
 library(svglite)
-svglite(file = "finalUnits.svg", width = 11.5, height = 8.5, fix_text_size = FALSE)  
-final_units
+svglite(file = "sampleScen.svg", width = 11.5, height = 8.5, fix_text_size = FALSE)  
+sample_scen_gg
 dev.off()
 
 

@@ -6,3 +6,6 @@
 *.ffs_db
 *.json
 *.arrow
+*.db
+*.ffs_db
+*.ffs_db

@@ -82,7 +82,8 @@ for (s in 1:8) {
 }
 
 # bind together
-pred_npa_gams <- bind_rows(pred_list, .id = "scenario")
+pred_npa_gams <- bind_rows(pred_list, .id = "scenario") |>
+    as_tibble()
 base50 <- filter(pred_npa_gams, n == 0.5 & scenario == 1)$fit
 
 # plot...
@@ -108,3 +109,10 @@ calibrate_gams_gg <- ggplot() +
     theme_bw()
 
 save.image("ms/data/calibrate/calibrate.RData")
+
+##
+library(svglite)
+
+svglite(file = "calibrateGAMs.svg", width = 11.5, height = 8.5, fix_text_size = FALSE)  
+calibrate_gams_gg
+dev.off()
