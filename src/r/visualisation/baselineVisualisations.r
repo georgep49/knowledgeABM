@@ -13,24 +13,34 @@ load("ms/data/control/control.RData")
 baseline_control[, n_agents := n_agents_per_unit * n_units]
 
 sim_t_summary <- baseline_control[,
-                            .(mean_ka = mean(ka), mean_kb = mean(kb)),
+                            .(ka_mean = mean(ka), kb_mean = mean(kb), bimod_a_mean = mean(bimodal.a), bimod_b_mean = mean(bimodal.b)),
                             by = .(tick, unit, scenario, n_agents_per_unit, n_units)] [
                             , n_agents := n_agents_per_unit * n_units]
 
 sim_g_summary <- baseline_control[,
-                            .(mean_ka = mean(ka), mean_kb = mean(kb)),
+                            .(ka_mean = mean(ka), kb_mean = mean(kb), bimod_a_mean = mean(bimodal.a), bimod_b_mean = mean(bimodal.b)),
                             by = .(gen, unit, scenario, n_agents_per_unit, n_units)] [
                                 , n_agents := n_agents_per_unit * n_units]
 
 sim_genbyrep_summary <- baseline_control[,
-                            .(mean_ka = mean(ka), mean_kb = mean(kb)),
+                            .(ka_mean = mean(ka), kb_mean = mean(kb), bimod_a_mean = mean(bimodal.a), bimod_b_mean = mean(bimodal.b)),
                             by = .(gen, tick, unit, scenario, n_agents_per_unit, n_units)] [
                             , n_agents := n_agents_per_unit * n_units]
 
-sim_final_summary <- baseline_control[gen == 50]
+sim_final_summary <- baseline_control[gen >= 50]  # gte max_gens
+
+
+sim_final_agg <- sim_final_summary[,
+    .(ka_mean = mean(ka), ka_p10 = quantile(ka, 0.10), ka_p90 = quantile(ka, 0.90),
+     bia_mean = mean(bimodal.a), ka_p10 = quantile(bimodal.a, 0.10), ka_p90 = quantile(bimodal.a, 0.90)),
+    by = .(rep, gen, sc_tag)] [
+        order(rep)
+    ]
+
+write_csv(sim_final_summary, "ms/data/derived/controlFinalGen.csv")
+write_csv(sim_final_agg, "ms/data/derived/controlFinalGenAgg.csv")
 
 save.image("ms/data/control/control.RData")
-
 ####
 
 load("ms/data/control/control.RData")
@@ -47,13 +57,22 @@ sc_labels <- c("a" = "null",
 
 ###
 # distribution of final knowledge of 'a' scenario null
-base_mean <- mean(baseline_control[gen == 40 & sc_tag == "a", ]$ka)
+base_mean <- mean(sim_final_summary[sc_tag == "a", ]$ka)
+base_bi <- mean(sim_final_summary[sc_tag == "a", ]$bimodal.a)
 
-# Boxplot for final k-a under baseline (120, 3) conditions
-final_units <- ggplot(data = baseline_control[gen == 40] %>% slice_sample(prop = 0.1)) +
+# Boxplot for final k-a and bimodal under baseline (120, 3) conditions
+final_units_ka <- ggplot(data = sim_final_summary |> slice_sample(prop = 0.1)) +
     geom_boxplot(aes(x = unit, y = ka, group = unit), outliers = FALSE) +
     geom_jitter(aes(x = unit, y = ka, group = unit), alpha = 0.1, width = 0.1) +
     geom_hline(yintercept = base_mean, col = "red", linetype = 2) +
+    facet_wrap(~sc_tag, labeller = labeller(sc_tag = sc_labels)) +
+    theme_bw()
+
+final_units_bi <- ggplot(data = sim_final_summary |> slice_sample(prop = 0.1)) +
+    geom_boxplot(aes(x = unit, y = bimodal.a, group = unit), outliers = FALSE) +
+    geom_jitter(aes(x = unit, y = bimodal.a, group = unit), alpha = 0.1, width = 0.1) +
+    geom_hline(yintercept = base_bi, col = "red", linetype = 2) +
+    geom_hline(yintercept = 5/9, col = "blue", linetype = 2) +
     facet_wrap(~sc_tag, labeller = labeller(sc_tag = sc_labels)) +
     theme_bw()
 
@@ -61,41 +80,75 @@ final_units <- ggplot(data = baseline_control[gen == 40] %>% slice_sample(prop =
 # median of ka by generation for each scenario
 sim_g_summary$sc_tag <- letters[sim_g_summary$scenario]
 
-gen_units <- ggplot(data = sim_g_summary) +
-    geom_line(aes(x = gen, y = mean_ka, col = factor(unit), group = unit)) +
-    xlim(0, 40) +
+gen_units_ka <- ggplot(data = sim_g_summary) +
+    geom_line(aes(x = gen, y = ka_mean, col = factor(unit), group = unit)) +
+    xlim(0, 50) +
     geom_hline(yintercept = base_mean, col = "red", linetype = 2) +
     facet_wrap(~sc_tag, labeller = labeller(sc_tag = sc_labels)) +
     theme_bw()
 
+gen_units_bi <- ggplot(data = sim_g_summary) +
+    geom_line(aes(x = gen, y = bimod_a_mean, col = factor(unit), group = unit)) +
+    xlim(0, 50) +
+    geom_hline(yintercept = base_bi, col = "red", linetype = 2) +
+    geom_hline(yintercept = 5/9, col = "blue", linetype = 2) +
+    facet_wrap(~sc_tag, labeller = labeller(sc_tag = sc_labels)) +
+    theme_bw()
+
 ###
-# Unit 1 for eight reps for each scenario (mean k-a)
+# Unit 1 for eight reps for each scenario (mean k-a and bimodal-a)
 sample_reps <- baseline_control[
         order(scenario, rep)][
         , sc_rep := .GRP, by = .(scenario, rep)][
         , sc_rep := (sc_rep %% 50) + 1][
-        , .(mean_ka = mean(ka), sc_tag = letters[scenario]), by = .(scenario, rep, sc_rep, gen, unit)]
+        , .(ka_mean = mean(ka), bimod_a_mean = mean(bimodal.a), sc_tag = letters[scenario]), 
+        by = .(scenario, rep, sc_rep, gen, unit)]
 
 sr <- sample(1:50, 8)
-sample_scen_gg <- ggplot(sample_reps[sc_rep %in% sr & unit == 1]) +
-    geom_line(aes(x = gen, y = mean_ka, col = factor(sc_rep), group = sc_rep)) +
+
+sample_scen_ka_gg <- ggplot(sample_reps[sc_rep %in% sr & unit == 1]) +
+    geom_line(aes(x = gen, y = ka_mean, col = factor(sc_rep), group = sc_rep)) +
     facet_wrap(~sc_tag, labeller = labeller(sc_tag = sc_labels)) +
     scale_colour_brewer(type = "qual", palette = "Dark2") +
+    geom_hline(yintercept = base_mean, col = "red", linetype = 2) +
     xlim(c(0, 50)) +
     theme_bw() +
-    theme(legend.position = "none") 
+    theme(legend.position = "none")
+
+
+sample_scen_bi_gg <- ggplot(sample_reps[sc_rep %in% sr & unit == 1]) +
+    geom_line(aes(x = gen, y = bimod_a_mean, col = factor(sc_rep), group = sc_rep)) +
+    facet_wrap(~sc_tag, labeller = labeller(sc_tag = sc_labels)) +
+    scale_colour_brewer(type = "qual", palette = "Dark2") +
+    geom_hline(yintercept = base_bi, col = "red", linetype = 2) +
+    geom_hline(yintercept = 5/9, col = "blue", linetype = 2) +
+    xlim(c(0, 50)) +
+    theme_bw() +
+    theme(legend.position = "none")
+
 
 ###
 # Each unit for nine reps of scenario 5
 sample_s5_reps <- sample_reps[scenario == 5 & sc_rep %in% sample(1:50, 9)]
 
-sample_s5_gg <- ggplot(data = sample_s5_reps) +
-    geom_line(aes(x = gen, y = mean_ka, col = factor(unit), group = unit)) +
-    xlim(c(0, 40)) +
+s5_ka_gg <- ggplot(data = sample_s5_reps) +
+    geom_line(aes(x = gen, y = ka_mean, col = factor(unit), group = unit)) +
+    xlim(c(0, 50)) +
     ylim(c(0, 100)) +
     facet_wrap(~sc_rep) +
     scale_colour_brewer(type = "qual", palette = "Dark2") +
+    geom_hline(yintercept = base_mean, col = "red", linetype = 2) +
     theme_bw()
+
+s5_ba_gg <- ggplot(data = sample_s5_reps) +
+    geom_line(aes(x = gen, y = bimod_a_mean, col = factor(unit), group = unit)) +
+    xlim(c(0, 50)) +
+    facet_wrap(~sc_rep) +
+    scale_colour_brewer(type = "qual", palette = "Dark2") +
+    geom_hline(yintercept = base_bi, col = "red", linetype = 2) +
+    geom_hline(yintercept = 5/9, col = "blue", linetype = 2) +
+    theme_bw()
+
 
 ###
 # Need to show distribution of turtles for each gen for k-a
@@ -120,18 +173,26 @@ lineage_gg <- ggplot(one_run) +
 
 ##
 library(svglite)
-svglite(file = "sampleScen.svg", width = 11.5, height = 8.5, fix_text_size = FALSE)  
-sample_scen_gg
+
+svglite(file = "ms/figs/figX_finalUnitsKa.svg", width = 11.5, height = 8.5, fix_text_size = FALSE)  
+final_units_ka
+dev.off()
+
+svglite(file = "ms/figs/figX_finalUnitsBi.svg", width = 11.5, height = 8.5, fix_text_size = FALSE)  
+final_units_bi
+dev.off()
+
+svglite(file = "ms/figs/figX_sampleScenKa.svg", width = 11.5, height = 8.5, fix_text_size = FALSE)  
+sample_scen_ka_gg
+dev.off()
+
+svglite(file = "ms/figs/figX_sampleScenBi.svg", width = 11.5, height = 8.5, fix_text_size = FALSE)  
+sample_scen_bi_gg
 dev.off()
 
 
 
+svglite(file = "ms/figs/figX_sampleScen.svg", width = 11.5, height = 8.5, fix_text_size = FALSE)  
+sample_scen_gg
+dev.off()
 
-2. Effects of different proximities
-
-- scenario 1 with cognitive distance (10, 20, 30, 60) and credibility threshold (on-off)
-
-3. Effects of different transfer types
-
-4. Effects of different resource preferences
-	 - scenario 1 w/ res-a-preference from 1 to 1.5, 0.05, n = 30

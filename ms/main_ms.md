@@ -1,19 +1,34 @@
----
-title: "An agent-based model of biocultural hysteresis"
-author: "George L.W. Perry ... "
-date: "`r format(Sys.time(), '%d %B, %Y')`"
-output:
-  pdf_document: default
-  html_document:
-    df_print: paged
-header-includes:
- \usepackage{float}
- \floatplacement{figure}{H}
-bibliography: bcHysteresis.bib
-csl: global-ecology-and-biogeography.csl
----
+#import "@preview/starter-journal-article:0.4.0": article, author-meta
 
-### Introduction
+#show: article.with(
+  title: "Trade-offs in the virtual forest: the roles of mortality, recruitment, and dispersal",
+  authors: (
+    "George L.W. Perry": author-meta(
+      "SENV",
+      email: "george.perry@auckland.ac.nz",
+    ),
+    "James M.R. Brock": author-meta(
+      "SBS",
+    ),
+    "David O'Sullivan": author-meta(
+      "IS"
+    )
+  ),
+  affiliations: (
+    "SENV": "School of Environment, University of Auckland, New Zealand",
+    "SBS": "School of Biological Sciences, University of Auckland, New Zealand",
+    "IS": "Independent Scholar"
+  ),
+  abstract: [#lorem(100)],
+  keywords: ("co-occurence", "mortality", "spatial model")
+)
+
+#set par(leading: 1.2em)
+#set par.line(numbering: i => if calc.rem(i, 5) == 0 { i })
+
+= Introduction
+
+Introduction
 
 Social-ecological systems can show non-linear and surprising behaviours in response to changes in social and environmental conditions [@reyersSocialecologicalSystemsInsights2018]. For example, tipping points - where there is rapid change in system state when some threshold is passed - and hysteresis - the difficulties in reversing these changes - challenge xxx [ref!].  The ability of a system to resist such change is called its 'resilience' [ref!].    
 

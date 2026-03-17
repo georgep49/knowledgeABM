@@ -29,8 +29,6 @@ turtles-own
   generation
   credibility
   encounter-rate-a
-
-
   unit
   visited-patches
 ]
@@ -715,7 +713,7 @@ memory-length
 memory-length
 0
 20
-5.0
+3.0
 1
 1
 NIL
@@ -780,7 +778,7 @@ SWITCH
 486
 know-move?
 know-move?
-1
+0
 1
 -1000
 
@@ -995,7 +993,7 @@ max-generations
 max-generations
 0
 100
-30.0
+84.0
 1
 1
 NIL
